@@ -72,6 +72,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
         let mut stream = client.chat().create_stream(request).await?;
 
+        let mut result_string = String::new();
         let mut lock = stdout().lock();
         while let Some(result) = stream.next().await {
             match result {
@@ -79,6 +80,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
                     response.choices.iter().for_each(|chat_choice| {
                         if let Some(ref content) = chat_choice.delta.content {
                             write!(lock, "{}", content).unwrap();
+                            result_string.push_str(content);
                         }
                     });
                 }
@@ -88,6 +90,12 @@ async fn main() -> Result<(), Box<dyn Error>> {
             }
             stdout().flush()?;
         }
+        messages.push(
+            ChatCompletionRequestMessageArgs::default()
+                .role(Role::System)
+                .content(result_string)
+                .build()?,
+        );
         println!("\n");
     }
 
