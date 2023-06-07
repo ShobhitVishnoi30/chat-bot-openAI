@@ -12,13 +12,13 @@ This is a simple chat assistant program written in Rust that utilizes the OpenAI
 1. Clone the repository:
 
    ```
-   git clone https://github.com/your-username/your-repo.git
+   git clone https://github.com/your-username/chat-bot-openAI.git
    ```
 
 2. Change into the project directory:
 
    ```
-   cd your-repo
+   cd chat-bot-openAI
    ```
 
 3. Build the project:
